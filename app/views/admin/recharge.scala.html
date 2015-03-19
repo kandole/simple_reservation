@@ -1,0 +1,28 @@
+@(title: String)(user: models.User)
+
+@main(title) {
+
+    @adminNavbar("nav4")
+        
+        <form class="form-sub" action="/recharge" method="post">
+            <p>用户： @user.name</p>
+            <div class="control-group">
+                <label class="control-label" for="balance">当前金额</label>
+                <div class="controls input-append">
+                    <span class="uneditable-input">@user.balance</span>
+                    <span class="add-on">元</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="reMoney">充值金额</label>
+                <div class="controls input-append">
+                	<input type="hidden" name="uId" value="@user.id.toString" />
+                    <input autofocus type="text" name="reMoney" id="reMoney" />
+                    <span class="add-on">元</span>
+                </div>
+            </div>
+            <button class="btn btn-primary" type="submit">充值</button>
+            <a class="btn" href="javascript:;" onClick="javascript:history.back(-1)">返回</a>
+        </form>
+
+} 

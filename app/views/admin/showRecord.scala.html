@@ -1,0 +1,85 @@
+@(title: String)(r: Restaurant)(orList: List[models.OrderReal])(ofList: List[models.FoodOrder])(d: String)
+
+@import views.normalUser.NUIndexHelper
+
+@main(title) {
+	
+	@adminNavbar("nav3")
+	<a class="btn" href="javascript:;" onClick="javascript:history.back(-1)">返回</a>
+	<table class="table">
+		<caption>日期：@d 饭店：@r.name<caption>	
+		<thead>
+			<tr>
+				<th>总人数</th>
+				<th>总份数</th>
+				<th>总金额</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>@orList.size 人</td>
+				<td>@NUIndexHelper.totalNum(orList) 份</td>
+				<td>@NUIndexHelper.totalMoney(orList) 元</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="table">
+		<caption>订单汇总<caption>	
+		<thead>
+			<tr>
+				<th>菜品</th>
+				<th>单价</th>
+				<th>份数</th>
+			</tr>
+		</thead>
+		<tbody>
+			@for(of <- ofList) {
+			<tr>
+				<td>@of.name</td>
+				<td>@of.price 元</td>
+				<td name="fen">@of.num 份</td>
+			</tr>
+			}
+		</tbody>
+	</table>	
+
+		
+	<form action="/finishOrder" method="post">
+	<table class="table">
+		<caption>订单详情<caption>	
+		<thead>
+			<tr>
+				<th>买家</th>
+				<th>订购菜品及价格</th>
+				<th>账户余额</th>
+				<th>支出</th>
+			</tr>
+		</thead>
+		<tbody>
+			@for(or <- orList) {
+			<tr>
+				<td>
+					@or.user.name
+					<input type="hidden" name="uIds[@orList.indexOf(or)]" value="@or.user.id.toString" />
+				</td>
+				<td>
+				@for((f, n) <- or.food) {
+					<p>@f.name - @f.price 元 [@n 份]</p>
+				}
+				</td>
+				<td>
+					@or.user.balance 元
+				</td>
+				<td>
+					@NUIndexHelper.onesMoney(or) 元
+					<input type="hidden" name="pays[@orList.indexOf(or)]" value="@NUIndexHelper.onesMoney(or)" />
+				</td>
+			</tr>
+			}
+		</tbody>
+	</table>
+
+	</form>
+
+}

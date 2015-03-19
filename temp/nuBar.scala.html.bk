@@ -1,0 +1,27 @@
+@if(nav == "nav1") {
+	    <ul class="nav pull-left">
+	   	  <li class="active"><a href="/normalUser">今日推荐</a></li>
+	    </ul>
+    	<ul class="nav pull-right">
+		  <li><a href="#userInfo" role="button" data-backdrop="true" data-toggle="modal">@user.name</a></li>
+		  @if(user.balance > 0) {
+			<li class="nav-message disabled"><a href="#">账户余额 @user.balance 元</a></li>
+		  } else {
+		  	<li class="nav-message-danger disabled"><a href="#">账户余额 @user.balance 元</a></li>
+		  }
+		  <li><a href="/nuUpdatePasswd">修改密码</a></li>
+		</ul>
+	} else {
+		<ul class="nav pull-left">
+	   	  <li><a href="/normalUser">今日推荐</a></li>
+	    </ul>
+    	<ul class="nav pull-right">
+		  <li><a href="#userInfo" role="button" data-backdrop="true" data-toggle="modal">@user.name</a></li>
+		  @if(user.balance > 0) {
+			<li class="nav-message disabled"><a href="#">账户余额 @user.balance 元</a></li>
+		  } else {
+		  	<li class="nav-message-danger disabled"><a href="#">账户余额 @user.balance 元</a></li>
+		  }
+		  <li class="active"><a href="/nuUpdatePasswd">修改密码</a></li>
+		</ul>
+	}

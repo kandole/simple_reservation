@@ -1,0 +1,9 @@
+db.User.insert({"authority":"管理员","balance":0,"login_id":"admin","name":"admin","passwd":"justforfun"})
+
+[DACOrder] $ start -Dhttp.port=80 -Dhttp.address=127.0.0.1
+
+mongoimport --db DACOrder --collection User --type csv --file /opt/dacOrder.git/public/User.ex.csv --headerline
+
+mongoimport --db DACOrder --collection Food --type json --file /opt/dacOrder.git/public/Food.json
+
+mongoimport --db DACOrder --collection Restaurant --type json --file /opt/dacOrder.git/public/Restaurant.json

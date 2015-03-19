@@ -1,0 +1,60 @@
+@(form: Form[(String, String, String)])(implicit flash: Flash)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>DACOrder Login</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+        <!-- <script src="@routes.Assets.at("javascripts/main.js")" type="text/javascript"></script> -->
+    </head>
+    <body>
+        <div class="container-fluid">
+        <!-- <div class="keepCenter">   -->
+        
+            <form class="form-signin" action="@routes.Application.authenticate" method="post">
+                <h1 class="form-signin-heading">
+                        DAC Order
+                </h1>
+                <h3 class="form-signin-heading">
+                        Just for 饭
+                </h3>
+            @form.globalError.map {error =>
+                <div class="alert alert-error">@error.message</div>
+            }
+            @flash.get("logoutSuccess").map {message =>
+                <div class="alert alert-success">@message</div>
+            }
+                
+                <div>
+                    <label>登录名</label>
+                    <div>
+                        <input autofocus type="text" name="login_id" id="login_id" />
+                    </div>
+                </div>
+                <div>
+                    <label>密码</label>
+                    <div>
+                        <input type="password" name="passwd" id="passwd" />
+                    </div>
+                </div>
+                <div>
+                    <label>权限</label>
+                    <div>
+                        <label class="select">
+                        <select name="authority" id="authority">
+                          <option value ="普通用户">普通用户</option>
+                          <option value ="管理员">管理员</option>
+                        </select>
+                        </label>
+                        <button type="submit" class="btn btn-large">登录</button>
+                    </div>
+                </div>
+            </form>
+        <!-- </div> -->
+        </div>
+    </body>
+</html>

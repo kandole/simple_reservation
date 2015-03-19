@@ -1,0 +1,50 @@
+@(title: String)(oList: List[String])(implicit flash: Flash)
+
+
+@main(title) {
+	@adminNavbar("nav3")
+	<script src="@routes.Assets.at("javascripts/jquery.pager.js")" type="text/javascript"></script>
+    <script type="text/javascript" language="javascript">
+    	var pageSize = 10;
+        $(document).ready(function() {
+        	hideAllRows();
+        	showRows(0, pageSize);
+            $("#pager").pager({ pagenumber: 1, pagecount: @{oList.size}/pageSize, buttonClickCallback: PageClick });
+
+        });
+
+        PageClick = function(pageclickednumber) {
+        	hideAllRows();
+        	showRows(pageclickednumber-1, pageSize);
+            $("#pager").pager({ pagenumber: pageclickednumber, pagecount: @{oList.size}/pageSize, buttonClickCallback: PageClick });      
+        }
+
+        function showRows(start, size) {
+        	for (var i=start*size; i<start*size+size; i++) {
+        		$(".pager_row").eq(i).show();
+        	}
+        }
+        function hideAllRows() {
+        	for (var i=0; i<@oList.size; i++) {
+        		$(".pager_row").eq(i).hide();
+        	}
+        }
+    </script>
+	<table class="table">
+		<caption>历史记录</caption>
+		<thead>
+			<tr>
+				<th>日期</th>
+				
+			</tr>
+		</thead>
+		<tbody>
+			@for(d <- oList) {
+			<tr class="pager_row">
+				<td><a href="/showRecord?date=@d">@d</a></td>
+			</tr>
+			}
+		</tbody>
+	</table>
+	<div id="pager"></div>
+}

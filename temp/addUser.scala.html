@@ -1,0 +1,39 @@
+@(message: String)(userAddForm: Form[models.User])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main(message) {
+    @helper.form(action = routes.Application.addUser) {
+    <fieldset>
+		<legend>User Add</legend>
+		@inputText(
+			userAddForm("login_id"),
+			'_label -> "登录名",
+			'_help -> "请输入登录名"
+			
+		)
+		@inputPassword(
+			userAddForm("passwd"),
+			'_label -> "密码",
+			'_help -> "请输入密码"
+		)
+		@inputText(
+			userAddForm("name"),			
+			'_label -> "姓名",
+			'_help -> "请填写真实姓名"
+		)
+		@select(
+			userAddForm("authority"),
+			options = options(List("普通用户", "管理员")),
+			'_label -> "权限",
+			'_help -> "请选择权限"
+		)
+	</fieldset>
+	<div class="actions">
+		<input type="submit" value="添加" class="btn" />
+	</div>
+	}
+    
+    
+}

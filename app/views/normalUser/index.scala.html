@@ -1,0 +1,113 @@
+@(title: String)(user: User)(r: models.Restaurant)(fList: List[models.Food])(orderList: List[models.Order])(endTime: String)(implicit flash: Flash)
+@import views.normalUser.NUIndexHelper
+
+@main(title) {
+	@nuMain(user)("nav1") {
+	<table class="table">
+		<caption>
+			饭店：<a href="#rInfo" role="button" data-backdrop="true" data-toggle="modal">@r.name</a>
+			<p class="text-warning">本次订餐截止时间：<strong>@endTime</strong></p>
+		</caption>
+		<thead>
+			<tr>
+				<th>菜品</th>
+				<th>价格</th>
+				<th>数量</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			@for(f <- fList) {
+			<form action="/orderFood" method="post">
+				<input type="hidden" name="uId" value="@user.id.toString" />
+				<input type="hidden" name="rId" value="@r.id.toString" />
+				<input type="hidden" name="fId" value="@f.id.toString" />
+				<input type="hidden" name="status" value="open" />
+			<tr>
+				<td>@f.name</td>
+				<td>@f.price 元</td>
+				
+					@if(!orderList.isEmpty){
+						@defining(NUIndexHelper.showTable(orderList, f.id.toString)) { t =>
+							@if(t._1 != "none") {
+								<td>
+									<select class="input-mini" disabled="disabled" name="number">
+								   	  <option>@t._2</option>
+									</select>
+								</td>
+								<td>
+									<a id="btn-ordered" class="btn btn-success" data-toggle="tooltip" data-placement="left" title="点击取消" href="/cancleOrder?oId=@t._1">已订</a>
+									<script type="text/javascript">
+										$(document).ready(function(){
+											$('#btn-ordered').mouseover(function(){
+												$(this).tooltip('show')
+											})
+										})
+									</script>
+								</th>
+							} else {
+								<td>
+									<select class="input-mini" name="number">
+								   	  <option>1</option>
+									  <option>2</option>
+									  <option>3</option>
+									  <option>4</option>
+									  <option>5</option>
+									</select>
+								</td>
+								<td><button type="submit" class="btn">订餐</button></th>
+							}
+						}
+					} else {
+						<td>
+							<select class="input-mini" name="number">
+						   	  <option>1</option>
+							  <option>2</option>
+							  <option>3</option>
+							  <option>4</option>
+							  <option>5</option>
+							</select>
+						</td>
+						<td><button type="submit" class="btn">订餐</button></th>
+					}
+				
+			</tr>
+			</form>
+			}
+		</tbody>
+	</table>
+
+	<!-- rInfo --> 
+	<div id="rInfo" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="rInfoLabel" aria-hidden="true">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    <h3>饭店信息</h3>
+	  </div>
+	  <div class="modal-body"> 
+	      <table class="table table-hover table-condensed">
+	      	<tbody>
+	      		<tr>
+	      			<td>名称</td>
+	      			<td>@r.name</td>
+	      		</tr>
+	      		<tr>
+	      			<td>电话</td>
+	      			<td>
+	      				<p>@r.phone1</p>
+	      				<p>@r.phone2</p>
+	      			</td>
+	      		</tr>
+	      		<tr>
+	      			<td>备注</td>
+	      			<td>@r.others</td>
+	      		</tr>
+	      	</tbody>
+	      </table>
+	  </div>
+      <div class="modal-footer">
+	    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+	  </div>
+	</div>
+	
+	}(flash)
+}

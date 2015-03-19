@@ -1,0 +1,28 @@
+@(title: String)(r: models.Restaurant)(fList: List[models.Food])(implicit flash: Flash)
+
+
+@main(title) {
+	@adminNavbar("nav2")
+
+	<div>
+		<table class="table">
+			<caption>@r.name 的 菜品列表</caption>
+			<thead>
+				<tr>
+					<th>名称</th>
+					<th>价格</th>
+				</tr>
+			</thead>
+			<tbody>
+				@for(f <- fList) {
+				<tr>
+					<td>@f.name</td>
+					<td>@f.price 元</td>
+				</tr>
+				}
+			</tbody>
+		</table>
+		<a class="btn" href="/RFmanager">返回</a>
+	</div>
+
+}

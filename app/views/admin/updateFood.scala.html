@@ -1,0 +1,39 @@
+@(title: String)(foodForm: Form[models.Food])(fId: String)(rId: String)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main(title) {
+	@adminNavbar("nav2")
+	<div class="form-sub">
+    
+	@helper.form(action = routes.Admin.updateF) {
+    <fieldset>
+		<legend>添加菜品</legend>
+		<input type="hidden" name="id" value="@fId" />
+		@inputText(
+			foodForm("name"),
+			'_label -> "菜名",
+			'_help -> "请输入菜名"			
+		)
+		@inputText(
+			foodForm("price"),
+			'_label -> "价格,单位：元",
+			'_help -> "请输入价格"			
+		)
+		<input type="hidden" name="restaurant" value="@rId" />
+	</fieldset>
+	
+	<div class="actions">
+		<input type="submit" value="修改" class="btn btn-primary" />
+		<a class="btn" href="javascript:;" onClick="javascript:history.back(-1)">返回</a>
+	</div>
+	}
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#name').focus()
+		})
+	</script>
+
+}

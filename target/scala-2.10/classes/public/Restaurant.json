@@ -1,0 +1,4 @@
+{ "_id" : { "$oid" : "51e37eb9e4b0533dcb580bb1" }, "isSeted" : true, "name" : "面对面", "others" : "订餐时间截止到9点40分", "phone1" : "13042496911", "phone2" : "13042496922" }
+{ "_id" : { "$oid" : "51e39bd2e4b0533dcb580bd3" }, "isSeted" : false, "name" : "米宝宝", "others" : "订餐时间截止到9点40分", "phone1" : "84783479", "phone2" : "84783489" }
+{ "_id" : { "$oid" : "51e4ad32e4b00c1a760e6f3f" }, "isSeted" : false, "name" : "金米家", "others" : "订餐截止时间为9点40分", "phone1" : "15142491377", "phone2" : "13591767926" }
+{ "_id" : { "$oid" : "51e4aed1e4b00c1a760e6f63" }, "name" : "美食坊", "isSeted" : false, "phone1" : "39919937", "phone2" : "39919938", "others" : "15940884994\r\n订餐时间截止为9点40分" }

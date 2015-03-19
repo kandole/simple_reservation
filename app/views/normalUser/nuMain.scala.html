@@ -1,0 +1,102 @@
+@(user: models.User)(nav: String)(content: Html)(implicit flash: Flash)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+	@nuNavbar(nav, user)
+	@content
+
+
+	<!-- userInfo --> 
+	<div id="userInfo" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="userInfoLabel" aria-hidden="true">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    <h3>用户信息</h3>
+	  </div>
+	  <div class="modal-body"> 
+	      <table class="table table-hover table-condensed">
+	      	<tbody>
+	      		<tr>
+	      			<td>登录名</td>
+	      			<td>@user.login_id</td>
+	      		</tr>
+	      		<tr>
+	      			<td>姓名</td>
+	      			<td>@user.name</td>
+	      		</tr>
+	      		<tr>
+	      			<td>权限</td>
+	      			<td>@user.authority</td>
+	      		</tr>
+	      		<tr>
+	      			<td>账户余额</td>
+	      			<td>@user.balance 元</td>
+	      		</tr>
+	      	</tbody>
+	      </table>
+	  </div>
+      <div class="modal-footer">
+	    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+	  </div>
+	</div>
+
+	<!-- updatePasswd --> 
+	<div id="updatePasswd" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="updatePasswdLabel" aria-hidden="true">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    <h3>修改密码</h3>
+	  </div>
+	  <div class="modal-body"> 
+	      <!-- remotePage -->
+	  </div>
+      <div class="modal-footer">
+	    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+	  </div>
+	</div>
+
+	<!-- <button class="btn" id="testModel">testModel</button> -->
+
+	<!-- 弹出式通知 -->
+
+	@flash.get("updatePWSuccess").map {message =>
+	<div id="upSuccess" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="upSuccessLabel" aria-hidden="true">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    
+	  </div>
+	  <div class="modal-body"> 
+	      <h3 class="alert alert-success">@message</h3>
+	  </div>
+      <div class="modal-footer">
+	    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+	  </div>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function(){
+		  $('#upSuccess').modal({
+		  	backdrop: false
+		  })
+		});
+	</script>
+    }
+    @flash.get("noOrderOpen").map {message =>
+	<div id="noOrderOpenM" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="noOrderOpenMLabel" aria-hidden="true">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    
+	  </div>
+	  <div class="modal-body"> 
+	      <h3 class="alert alert-success">@message</h3>
+	  </div>
+      <div class="modal-footer">
+	    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+	  </div>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function(){
+		  $('#noOrderOpenM').modal({
+		  	backdrop: false
+		  })
+		});
+	</script>
+    }

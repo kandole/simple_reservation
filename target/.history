@@ -1,0 +1,16 @@
+start -Dhttp.port=80
+start
+exit
+help
+ps -ef
+exit
+start
+run
+start
+run
+start
+help play
+start
+run 8080
+start -Dhttp.port=8080
+run -Dhttp.port=8080

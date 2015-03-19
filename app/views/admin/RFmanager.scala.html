@@ -1,0 +1,202 @@
+@(title: String)(rList: List[models.Restaurant])(oc: models.OrderControl)(implicit flash: Flash)
+
+
+@main(title) {
+	@adminNavbar("nav2")
+
+	<!-- <div class="row"> -->
+		<a class="btn btn-primary" href="@routes.Admin.saveRestaurant">添加饭店</a>
+	<!-- </div> -->
+
+	@flash.get("updateRestaurantSuccess").map {message =>
+        <div class="alert alert-success">@message</div>
+    }
+    @flash.get("noRestaurantSeted").map {message =>
+        <div class="alert alert-success">@message</div>
+    }
+
+	<!-- <div class="row"> -->
+		<table class="table">
+			<caption>饭店列表</caption>
+			<thead>
+				<tr>
+					<th>饭店名</th>
+					<th>电话</th>
+					<th>备注</th>
+					<th>操作</th>
+					<th>今日指定</th>
+				</tr>
+			</thead>
+			<tbody>
+				@for(r <- rList) {
+					@if(r.isSeted == false) {
+					<tr>
+						<td>
+							<a href="/showFood?rId=@r.id.toString">@r.name</a>
+						</td>
+						<td>
+							<p>@r.phone1</p>
+							<p>@r.phone2</p>
+						</td>
+						<td>
+							<p>@r.others</p>
+						</td>
+						<td>
+							<a class="btn btn-warning" href="/updateRestaurant?rId=@r.id.toString">修改</a>
+							<a id="deleteRLink_@r.id.toString" class="btn btn-danger" href="#">删除</a>
+							<script type="text/javascript">
+								$(document).ready(function(){
+								  $('#deleteRLink_@r.id.toString').click(function(){
+								  	var r = confirm("确定要删除该饭店？")
+								  	if (r==true) {
+								  		window.location.href = "/deleteRestaurant?rId=@r.id.toString"
+								  	}
+
+								  })
+								});
+							</script>
+						</td>
+						@if(oc.status == "open") {
+							<td><a class="btn disabled" href="#">指定</a></td>
+						} else {
+							<td><a class="btn" href="/setRestaurant?rId=@r.id.toString">指定</a></td>
+						}
+							
+					</tr>
+					} else {
+						@if(oc.status == "open") {
+							<tr>
+								<td>
+									<a href="/justShowFood?rId=@r.id.toString">@r.name</a>
+								</td>
+								<td>
+									<p>@r.phone1</p>
+									<p>@r.phone2</p>
+								</td>
+								<td>
+									<p>@r.others</p>
+								</td>
+								<td>
+									<a class="btn btn-warning disabled" href="#">修改</a>
+									<a class="btn btn-danger disabled" href="#">删除</a>
+								</td>
+								<td><a class="btn btn-success disabled" href="#">已指定</a></td>
+							</tr>
+						} else {
+							<tr>
+								<td>
+									<a href="/showFood?rId=@r.id.toString">@r.name</a>
+								</td>
+								<td>
+									<p>@r.phone1</p>
+									<p>@r.phone2</p>
+								</td>
+								<td>
+									<p>@r.others</p>
+								</td>
+								<td>
+									<a class="btn btn-warning" href="/updateRestaurant?rId=@r.id.toString">修改</a>
+									<a id="deleteRLink_@r.id.toString" class="btn btn-danger" href="#">删除</a>
+									<script type="text/javascript">
+										$(document).ready(function(){
+										  $('#deleteRLink_@r.id.toString').click(function(){
+										  	var r = confirm("确定要删除该饭店？")
+										  	if (r==true) {
+										  		window.location.href = "/deleteRestaurant?rId=@r.id.toString"
+										  	}
+
+										  })
+										});
+									</script>
+								</td>
+								<td><a class="btn btn-success disabled" href="#">已指定</a></td>
+							</tr>
+
+						}
+
+					}
+				}
+			</tbody>
+		</table>
+	<!-- </div> -->
+	<!-- <div class="row"> -->
+		@if(oc.status == "open") {
+		<div class="input-prepend input-append">
+			<span class="add-on">订饭截止时间</span>
+			<div class="input-prepend input-append">
+				<select class="input-mini" disabled="disabled">
+					<option>@oc.endTime.split(':')(0)</option>
+				</select>
+				<span class="add-on">时</span>
+				<div class="input-append">
+					<select class="input-mini" disabled="disabled">
+						<option>@oc.endTime.split(':')(1)</option>
+					</select>
+					<span class="add-on">分</span>
+				</div>
+			</div>
+			<a id="closeOrder" class="btn btn-danger" href="#">关闭订饭</a>
+		</div>
+		
+		<script type="text/javascript">
+			$(document).ready(function(){
+			  $('#closeOrder').click(function(){
+			  	var r = confirm("还未划账，确定要关闭订饭？")
+			  	if (r==true) {
+			  		window.location.href = "/orderOpenControl?status=open&endTime=off"
+			  	}
+
+			  })
+			});
+		</script>
+		} else {
+		<div class="input-prepend input-append">
+			<span class="add-on">订饭截止时间</span>
+			<div class="input-prepend input-append">
+				<select id="hour" class="input-mini">
+					@for(i <- 8 to 12 ) {
+						@if(i < 10) {
+							<option>0@i</option>
+						} else {
+							@if(i == 10) {
+								<option selected="selected">10</option>
+							} else {
+								<option>@i</option>
+							}
+						}
+					}	
+				</select>
+				<span class="add-on">时</span>
+				<div class="input-append">
+					<select id="minute" class="input-mini">
+						@for(i <- 0 to 50 if (i % 10 == 0)) {
+							@if(i < 10) {
+								<option>0@i</option>
+							} else {
+								<option>@i</option>
+							}
+						}	
+					</select>
+					<span class="add-on">分</span>
+				</div>
+			</div>
+			<a id="openOrder" class="btn btn-success" href="#">开启订饭</a>
+			<script type="text/javascript">
+				$(document).ready(function(){
+				  $('#openOrder').click(function(){
+				  	var hour = $('#hour').val()
+				  	var minute = $('#minute').val()
+				  	var time = hour + ':' + minute
+				  	// alert("endTime:" + time)
+				  	window.location.href = "/orderOpenControl?status=closed&endTime=" + time
+				  })
+				});
+			</script>
+		</div>
+		}
+	<!-- </div> -->
+
+
+		
+
+}

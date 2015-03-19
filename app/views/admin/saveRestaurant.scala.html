@@ -1,0 +1,57 @@
+@(title: String)(rForm: Form[models.Restaurant])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main(title) {
+	@adminNavbar("nav2")
+
+	<div class="form-sub">
+	@helper.form(action = routes.Admin.saveR) {
+    <fieldset>
+		<legend>添加饭店</legend>
+
+		@rForm.globalError.map {error =>
+                <div class="alert alert-error">@error.message</div>
+        }
+		@inputText(
+			rForm("name"),
+			'_label -> "饭店名",
+			'_help -> "请输入饭店名"			
+		)
+		@inputText(
+			rForm("phone1"),
+			'_label -> "电话1",
+			'_help -> "请输入一个电话号码"			
+		)
+		@inputText(
+			rForm("phone2"),
+			'_label -> "电话2",
+			'_help -> "请输入另一个电话号码"			
+		)
+		@inputFile(
+			rForm("pic"),
+			'_label -> "图片",
+			'_help -> "该饭店的宣传"			
+		)
+		@textarea(
+			rForm("others"),
+			'_label -> "备注",
+			'_help -> "如有其他信息，请输入"	,
+			'rows -> 3,
+			'cols -> 50		
+		)
+		<input type="hidden" name="isSeted" value="false" />
+	</fieldset>
+	<div class="actions">
+		<input type="submit" value="添加" class="btn btn-primary" />
+		<a class="btn" href="javascript:;" onClick="javascript:history.back(-1)">返回</a>
+	</div>
+	}
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#name').focus()
+		})
+	</script>
+}

@@ -1,0 +1,43 @@
+@(message: String)(userForm: Form[models.UUser])(uId: String)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main(message) {
+
+	@adminNavbar("nav4")
+	<div class="form-sub">
+    @helper.form(action = routes.Admin.updateU) {
+    <fieldset>
+		<legend>@message</legend>
+			<input type="hidden" name="id" value="@uId" />
+
+		@inputText(
+			userForm("login_id"),
+			'_label -> "登录名",
+			'_help -> "请输入登录名"		
+		)
+		@inputText(
+			userForm("name"),			
+			'_label -> "姓名",
+			'_help -> "请填写真实姓名"
+		)
+		@select(
+			userForm("authority"),
+			options = options(List("普通用户", "管理员")),
+			'_label -> "权限",
+			'_help -> "请选择权限"
+		)
+	</fieldset>
+	<div class="actions">
+		<input type="submit" value="修改" class="btn btn-primary" />
+		<a class="btn" href="javascript:;" onClick="javascript:history.back(-1)">返回</a>
+	</div>
+	}   
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#login_id').focus()
+		})
+	</script>
+}

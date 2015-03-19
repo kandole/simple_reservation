@@ -1,0 +1,78 @@
+@(title: String)(uList: List[models.User])(implicit flash: Flash)
+
+@import views.ViewHelper._
+
+@main(title) {
+	@adminNavbar("nav4")
+
+	<div>
+		<a class="btn btn-primary" href="/saveUser">添加用户</a>
+	</div>
+	<div>
+	@flash.get("updateUserSuccess").map {message =>
+        <div class="alert alert-success">@message</div>
+    }
+	</div>
+	<div>
+	@flash.get("rechargeSuccess").map {message =>
+        <div class="alert alert-success">@message</div>
+    }
+	</div>
+
+	<div>
+		<table class="table">
+			<caption>用户总体信息</caption>
+			<thead>
+				<tr>
+					<th>总人数</th>
+					<th>账户总额</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>@uList.size 人</td>
+					<td>@totalBalance(uList) 元</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table class="table">
+			<caption>用户列表</caption>
+			<thead>
+				<tr>
+					<th>登录名</th>
+					<th>姓名</th>
+					<th>权限</th>
+					<th>账户余额</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				@for(u <- uList) {
+				<tr>
+					<td>@u.login_id</td>
+					<td>@u.name</td>
+					<td>@u.authority</td>
+					<td>@u.balance 元</td>
+					<td>
+						<a class="btn btn-warning" href="/userUpdate?uId=@u.id.toString">修改</a>
+						<a id="deleteULink_@u.id.toString" class="btn btn-danger" href="#">删除</a>
+						<script type="text/javascript">
+							$(document).ready(function(){
+							  $('#deleteULink_@u.id.toString').click(function(){
+							  	var r = confirm("确定要删除该用户？")
+							  	if (r==true) {
+							  		window.location.href = "/userDelete?uId=@u.id.toString"
+							  	}
+
+							  })
+							});
+						</script>
+						<a class="btn btn-success" href="/recharge?uId=@u.id.toString">充值</a>
+					</td>
+				</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+}

@@ -1,0 +1,13 @@
+@(title: String)(implicit flash: Flash)
+
+@main(title) {
+	@adminNavbar("nav1")
+
+	<div class="jumbotron">
+	<h1>没有开启订单</h1>
+	<p class="lead">请到 [饭店及菜品管理] 中开启订单</p>
+	@flash.get("finishOrderSuccess").map {message =>
+        <div class="alert alert-success">@message</div>
+    }
+	</div>
+}

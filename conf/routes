@@ -1,0 +1,51 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Auth page
+GET     /                           controllers.Application.login
+#GET 	/login 						controllers.Application.login
+POST	/login						controllers.Application.authenticate
+GET 	/logout						controllers.Application.logout
+
+# Admin page
+GET		/admin 						controllers.Admin.index
+# POST 	/addUser 					controllers.Admin.addUser
+GET 	/RFmanager 					controllers.Admin.RFmanager
+GET 	/saveRestaurant 			controllers.Admin.saveRestaurant
+POST 	/saveRestaurant 			controllers.Admin.saveR
+GET 	/saveFood 					controllers.Admin.saveFood(rId: String)
+POST 	/saveFood 					controllers.Admin.saveF
+GET 	/showFood 					controllers.Admin.showFood(rId: String)
+GET 	/justShowFood 				controllers.Admin.justShowFood(rId: String)
+GET 	/updateFood					controllers.Admin.updateFood(fId: String, rId: String)
+POST 	/updateFood					controllers.Admin.updateF
+GET		/deleteFood					controllers.Admin.deleteF(fId: String, rId: String)
+GET 	/deleteRestaurant			controllers.Admin.deleteR(rId: String)
+GET 	/updateRestaurant 			controllers.Admin.updateRestaurant(rId: String)
+POST 	/updateRestaurant 			controllers.Admin.updateR
+GET 	/setRestaurant 				controllers.Admin.setR(rId: String)
+GET 	/saveUser 					controllers.Admin.saveUser
+POST 	/saveUser					controllers.Admin.saveU
+GET 	/userManager				controllers.Admin.userManager
+POST 	/finishOrder				controllers.Admin.finishOrder
+GET 	/orderOpenControl			controllers.Admin.orderOpenControl(status: String, endTime: String)
+GET 	/userUpdate 				controllers.Admin.userUpdate(uId: String)
+POST 	/userUpdate					controllers.Admin.updateU
+GET 	/userDelete 				controllers.Admin.userDelete(uId: String)
+GET 	/recharge					controllers.Admin.recharge(uId: String)
+POST 	/recharge					controllers.Admin.rech
+GET 	/orderRecords 				controllers.Admin.orderRecords
+GET 	/showRecord					controllers.Admin.showRecord(date: String)
+
+# Normal User page
+GET 	/normalUser 				controllers.NormalUser.index
+POST 	/orderFood 					controllers.NormalUser.orderF
+GET 	/cancleOrder				controllers.NormalUser.cancleO(oId: String)
+POST 	/nuUpdatePasswd 			controllers.NormalUser.updatePW
+GET 	/nuUpdatePasswd     		controllers.NormalUser.updatePasswd
+# GET		/nuUPError					controllers.NormalUser.upError
+GET 	/showUserHistory 			controllers.NormalUser.showUserHistory
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)

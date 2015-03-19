@@ -1,0 +1,10 @@
+@(nav: String, user: models.User)
+
+@import views.ViewHelper
+
+	<div class="navbar">
+	  <div class="navbar-inner">
+	    <a class="brand" href="/logout">退出</a>
+	    @ViewHelper.showActiveNavForNU(nav, user)
+	  </div>
+	</div>

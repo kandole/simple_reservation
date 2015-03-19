@@ -1,0 +1,42 @@
+@(title: String)(user: models.User)(passwdUForm: Form[(String, String, (String, String))])(implicit flash: Flash)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main(title) {
+	@nuMain(user)("nav-changePasswd") {
+		<div class="form-sub">
+			<form action="/nuUpdatePasswd" method="post">
+		    	<input type="hidden" name="uId" value="@user.id.toString" />
+		    	@inputPassword(
+		    		passwdUForm("old_passwd"),
+		    		'_label -> "原密码", 
+	                '_help -> "请输入原密码.",
+	                '_error -> passwdUForm.globalError
+		    	) 
+		        @inputPassword(
+		    		passwdUForm("new_passwd.main"),
+		    		'_label -> "新密码", 
+	                '_help -> "请输入新密码."
+		    	)
+		    	@inputPassword(
+		    		passwdUForm("new_passwd.confirm"),
+		    		'_label -> "新密码确认", 
+	                '_help -> "请再次输入新密码.",
+	                '_error -> passwdUForm.error("new_passwd")
+		    	)
+		  	  
+			    <button class="btn btn-primary" type="submit">提交修改</button>
+
+			</form>
+			<a class="btn" href="/normalUser">返回</a>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('#old_passwd').focus()
+			})
+		</script>
+	}(flash)
+}
+
+			  

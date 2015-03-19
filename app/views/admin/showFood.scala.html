@@ -1,0 +1,52 @@
+@(title: String)(r: models.Restaurant)(fList: List[models.Food])(implicit flash: Flash)
+
+
+@main(title) {
+	@adminNavbar("nav2")
+
+	<div>
+		<a class="btn btn-primary" href="/saveFood?rId=@r.id.toString">添加菜品</a>
+	</div>
+
+	@flash.get("updateFoodSuccess").map {message =>
+        <div class="alert alert-success">@message</div>
+    }
+
+	<div>
+		<table class="table">
+			<caption>@r.name 的 菜品列表</caption>
+			<thead>
+				<tr>
+					<th>名称</th>
+					<th>价格</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				@for(f <- fList) {
+				<tr>
+					<td>@f.name</td>
+					<td>@f.price 元</td>
+					<td>
+						<a class="btn btn-warning" href="/updateFood?fId=@f.id.toString&rId=@r.id.toString">修改</a>
+						<a id="deleteFLink_@f.id.toString" class="btn btn-danger" href="#">删除</a></td>
+						<script type="text/javascript">
+							$(document).ready(function(){
+							  $('#deleteFLink_@f.id.toString').click(function(){
+							  	var r = confirm("确定要删除该菜品？")
+							  	if (r==true) {
+							  		window.location.href = "/deleteFood?fId=@f.id.toString&rId=@r.id.toString"
+							  	}
+
+							  })
+							});
+						</script>
+					</td>
+				</tr>
+				}
+			</tbody>
+		</table>
+		<a class="btn" href="/RFmanager">返回</a>
+	</div>
+
+}

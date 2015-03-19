@@ -1,0 +1,15 @@
+2015-03-19 10:59:00,931 - [INFO] - from play in main 
+Listening for HTTP on /0:0:0:0:0:0:0:0:8080
+
+2015-03-19 10:59:12,709 - [INFO] - from play in New I/O worker #1 
+mongodb [default] connected at 127.0.0.1:27017/DACOrder
+
+2015-03-19 10:59:12,711 - [INFO] - from application in New I/O worker #1 
+Application has started
+
+2015-03-19 10:59:13,279 - [INFO] - from application in New I/O worker #1 
+oc001 has existed.
+
+2015-03-19 10:59:13,295 - [INFO] - from play in New I/O worker #1 
+Application started (Dev)
+

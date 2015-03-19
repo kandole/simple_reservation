@@ -1,0 +1,9 @@
+@(title: String)(user: User)(implicit flash: Flash)
+
+@main(title) {
+	@nuMain(user)("nav1") {
+	<div class="jumbotron">
+		<h1>现在没有订单</h1>
+	</div>
+	}(flash)
+}
